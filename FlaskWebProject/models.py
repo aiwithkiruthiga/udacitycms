@@ -18,6 +18,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    email = db.Column(db.String(150), unique=True)  # New field for MS login
+    ms_id = db.Column(db.String(150), unique=True)  # New field for MS login
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -36,6 +38,7 @@ class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150))
+    subtitle = db.Column(db.String(255))  # New subtitle field
     author = db.Column(db.String(75))
     body = db.Column(db.String(800))
     image_path = db.Column(db.String(100))
@@ -43,26 +46,50 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
+        return '<Post {}>'.format(self.title)
 
     def save_changes(self, form, file, userId, new=False):
         self.title = form.title.data
+        self.subtitle = form.subtitle.data  # Save subtitle
         self.author = form.author.data
         self.body = form.body.data
         self.user_id = userId
 
         if file:
-            filename = secure_filename(file.filename);
-            fileextension = filename.rsplit('.',1)[1];
-            Randomfilename = id_generator();
-            filename = Randomfilename + '.' + fileextension;
+            filename = secure_filename(file.filename)
+            fileextension = filename.rsplit('.',1)[1]
+            Randomfilename = id_generator()
+            filename = Randomfilename + '.' + fileextension
             try:
+                # Upload new image
                 blob_service.create_blob_from_stream(blob_container, filename, file)
-                if(self.image_path):
+                # Delete old image if exists
+                if self.image_path:
                     blob_service.delete_blob(blob_container, self.image_path)
-            except Exception:
-                flash(Exception)
-            self.image_path =  filename
+            except Exception as e:
+                flash(str(e))
+            self.image_path = filename
+
         if new:
             db.session.add(self)
         db.session.commit()
+
+    def delete_post(self):
+        """Delete the post and its image from blob storage"""
+        try:
+            if self.image_path:
+                blob_service.delete_blob(blob_container, self.image_path)
+        except Exception as e:
+            flash(str(e))
+        db.session.delete(self)
+        db.session.commit()
+
+    def remove_image(self):
+        """Remove only the image but keep the post"""
+        try:
+            if self.image_path:
+                blob_service.delete_blob(blob_container, self.image_path)
+                self.image_path = None
+                db.session.commit()
+        except Exception as e:
+            flash(str(e))
