@@ -13,7 +13,7 @@ from FlaskWebProject.models import User, Post
 import msal
 import uuid
 
-imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER']  + '/'
+imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER'] + '/'
 
 # ------------------ HOME ------------------
 @app.route('/')
@@ -21,6 +21,7 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 @login_required
 def home():
     posts = Post.query.all()
+    app.logger.info(f"User '{current_user.username}' accessed the home page.")
     return render_template(
         'index.html',
         title='Home Page',
@@ -37,6 +38,7 @@ def new_post():
         file = request.files.get('image_path')
         post = Post()
         post.save_changes(form, file, current_user.id, new=True)
+        app.logger.info(f"User '{current_user.username}' created a new post titled '{form.title.data}'.")
         flash('Post created successfully!')
         return redirect(url_for('home'))
     return render_template(
@@ -55,6 +57,7 @@ def post(id):
     if form.validate_on_submit():
         file = request.files.get('image_path')
         post.save_changes(form, file, current_user.id)
+        app.logger.info(f"User '{current_user.username}' updated post ID {id} titled '{form.title.data}'.")
         flash('Post updated successfully!')
         return redirect(url_for('home'))
     return render_template(
@@ -70,9 +73,11 @@ def post(id):
 def delete_post(id):
     post = Post.query.get_or_404(id)
     if post.user_id != current_user.id:
+        app.logger.warning(f"Unauthorized delete attempt by '{current_user.username}' on post ID {id}.")
         flash('You are not authorized to delete this post.')
         return redirect(url_for('home'))
     post.delete_post()
+    app.logger.info(f"User '{current_user.username}' deleted post ID {id}.")
     flash('Post deleted successfully!')
     return redirect(url_for('home'))
 
@@ -82,9 +87,11 @@ def delete_post(id):
 def remove_image(id):
     post = Post.query.get_or_404(id)
     if post.user_id != current_user.id:
+        app.logger.warning(f"Unauthorized image removal attempt by '{current_user.username}' on post ID {id}.")
         flash('You are not authorized to remove the image.')
         return redirect(url_for('home'))
     post.remove_image()
+    app.logger.info(f"User '{current_user.username}' removed image from post ID {id}.")
     flash('Image removed successfully!')
     return redirect(url_for('post', id=id))
 
@@ -92,15 +99,18 @@ def remove_image(id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
+        app.logger.info(f"User '{current_user.username}' is already logged in.")
         return redirect(url_for('home'))
 
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
+            app.logger.warning(f"Failed login attempt for username: {form.username.data}")
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
+        app.logger.info(f"User '{user.username}' logged in successfully.")
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
@@ -114,34 +124,39 @@ def login():
 @app.route(Config.REDIRECT_PATH)
 def authorized():
     if request.args.get('state') != session.get("state"):
+        app.logger.warning("State mismatch during Microsoft login redirect.")
         return redirect(url_for("home"))
 
     if "error" in request.args:
+        app.logger.error(f"Microsoft login error: {request.args}")
         return render_template("auth_error.html", result=request.args)
 
     if "code" in request.args:
         cache = _load_cache()
         result = None  # TODO: Acquire token using MSAL
         if "error" in result:
+            app.logger.error(f"MSAL token acquisition error: {result}")
             return render_template("auth_error.html", result=result)
 
         user_claims = result.get("id_token_claims")
         email = user_claims.get("preferred_username")
         ms_id = user_claims.get("oid")
 
-        # Get or create user
         user = User.query.filter_by(ms_id=ms_id).first()
         if not user:
             user = User(username=email.split('@')[0], email=email, ms_id=ms_id)
             db.session.add(user)
             db.session.commit()
+            app.logger.info(f"New Microsoft user '{user.username}' created.")
         login_user(user)
+        app.logger.info(f"Microsoft user '{user.username}' logged in successfully.")
         _save_cache(cache)
     return redirect(url_for('home'))
 
 # ------------------ LOGOUT ------------------
 @app.route('/logout')
 def logout():
+    app.logger.info(f"User '{current_user.username}' logged out.")
     logout_user()
     session.clear()
     return redirect(
