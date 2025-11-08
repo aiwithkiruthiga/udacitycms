@@ -13,6 +13,9 @@ from FlaskWebProject.models import User, Post
 import msal
 import uuid
 
+# ------------------ APP STARTUP ------------------
+app.logger.info("✅ Flask application started successfully and is running on Azure.")
+
 imageSourceUrl = 'https://' + app.config['BLOB_ACCOUNT'] + '.blob.core.windows.net/' + app.config['BLOB_CONTAINER'] + '/'
 
 # ------------------ HOME ------------------
@@ -133,8 +136,8 @@ def authorized():
 
     if "code" in request.args:
         cache = _load_cache()
-        result = None  # TODO: Acquire token using MSAL
-        if "error" in result:
+        result = None  # TODO: Implement MSAL token acquisition here
+        if not result or "error" in result:
             app.logger.error(f"MSAL token acquisition error: {result}")
             return render_template("auth_error.html", result=result)
 
