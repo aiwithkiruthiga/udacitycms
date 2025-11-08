@@ -4,7 +4,7 @@
 
 * This project involves deploying a **Flask-based Content Management System (Article CMS)** to **Microsoft Azure**.
 * The web application allows users to log in (either with admin credentials or via Microsoft OAuth2), create, edit, and manage articles with image uploads stored in Azure Blob Storage. The backend data is stored in Azure SQL Database.
-* The primary goal of this project is to analyze different Azure deployment options — **Virtual Machine (VM)** vs **App Service** — and choose the most suitable one for hosting the Flask CMS based on cost, scalability, availability, and workflow considerations.
+* The primary goal of this project is to analyze different Azure deployment options **Virtual Machine (VM)** vs **App Service** and choose the most suitable one for hosting the Flask CMS based on cost, scalability, availability, and workflow considerations.
 
 ---
 
