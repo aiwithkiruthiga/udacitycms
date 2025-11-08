@@ -1,7 +1,7 @@
 
-# 📰 Flask CMS Deployment Analysis – Azure App Service vs Virtual Machine
+# Flask CMS Deployment Analysis – Azure App Service vs Virtual Machine
 
-## 🚀 Overview
+## Overview
 
 This document provides a detailed comparison between **Azure Virtual Machine (VM)** and **Azure App Service** for deploying the Flask-based Content Management System (CMS).  
 It analyzes **cost, scalability, availability, and workflow**, and concludes with a justification for the chosen deployment approach — **Azure App Service**.  
@@ -9,9 +9,9 @@ Finally, it discusses how potential application changes could influence the depl
 
 ---
 
-## ⚖️ Comparison: VM vs App Service
+## Comparison: VM vs App Service
 
-### 💰 1. Cost Analysis
+### 1. Cost Analysis
 
 | Aspect | Virtual Machine (VM) | App Service |
 |--------|----------------------|-------------|
@@ -19,11 +19,11 @@ Finally, it discusses how potential application changes could influence the depl
 | **Operational Costs** | High — requires manual OS maintenance, security patching, and configuration. | Low — Azure handles infrastructure maintenance and OS patching automatically. |
 | **Scaling Costs** | Manual scaling increases costs linearly with each VM instance. | Dynamic scaling adjusts automatically with traffic to minimize idle cost. |
 
-✅ **Summary:** App Service is more cost-efficient for small to medium-scale applications like the Flask CMS, while a VM suits consistently heavy workloads or custom environments.
+**Summary:** App Service is more cost-efficient for small to medium-scale applications like the Flask CMS, while a VM suits consistently heavy workloads or custom environments.
 
 ---
 
-### ⚙️ 2. Scalability Analysis
+### 2. Scalability Analysis
 
 | Aspect | Virtual Machine (VM) | App Service |
 |--------|----------------------|-------------|
@@ -31,11 +31,11 @@ Finally, it discusses how potential application changes could influence the depl
 | **Elasticity** | Limited; scaling often involves downtime or reconfiguration. | Highly elastic; supports autoscaling based on CPU, memory, or HTTP queue length. |
 | **Management Effort** | High; must handle load balancers and replication. | Low; Azure manages load balancing and scaling automatically. |
 
-✅ **Summary:** App Service provides superior scalability and elasticity with minimal administrative effort.
+**Summary:** App Service provides superior scalability and elasticity with minimal administrative effort.
 
 ---
 
-### 🕒 3. Availability Analysis
+### 3. Availability Analysis
 
 | Aspect | Virtual Machine (VM) | App Service |
 |--------|----------------------|-------------|
@@ -43,11 +43,11 @@ Finally, it discusses how potential application changes could influence the depl
 | **Fault Tolerance** | Requires custom setup for redundancy and backup. | Handled automatically by Azure with fault domain isolation. |
 | **Maintenance Downtime** | Must be scheduled manually during OS updates. | Zero-downtime deployment supported with rolling updates. |
 
-✅ **Summary:** App Service offers reliable built-in availability and fault tolerance, ideal for production-grade web apps.
+**Summary:** App Service offers reliable built-in availability and fault tolerance, ideal for production-grade web apps.
 
 ---
 
-### 🧩 4. Workflow and Deployment Analysis
+### 4. Workflow and Deployment Analysis
 
 | Aspect | Virtual Machine (VM) | App Service |
 |--------|----------------------|-------------|
@@ -55,11 +55,11 @@ Finally, it discusses how potential application changes could influence the depl
 | **DevOps Integration** | CI/CD setup must be done manually. | Native GitHub Actions and Azure DevOps integration supported. |
 | **Monitoring and Logging** | Needs separate configuration for logs and metrics. | Integrated with Application Insights and Azure Monitor. |
 
-✅ **Summary:** App Service simplifies the deployment pipeline, supports CI/CD, and integrates monitoring by default.
+**Summary:** App Service simplifies the deployment pipeline, supports CI/CD, and integrates monitoring by default.
 
 ---
 
-## 🏆 Decision: Why I Chose Azure App Service
+## Decision: Why I Chose Azure App Service
 
 I chose **Azure App Service** for deploying the Flask CMS application because it provides a **fully managed, scalable, and cost-effective** solution that minimizes infrastructure management.  
 It allows easy deployment from GitHub, supports Python natively, and provides built-in monitoring, high availability, and secure authentication (Microsoft OAuth2 integration).
@@ -67,11 +67,11 @@ It allows easy deployment from GitHub, supports Python natively, and provides bu
 App Service also supports automatic scaling and zero-downtime deployment, which are essential for production environments.  
 In contrast, a VM would require continuous OS maintenance, security patching, and manual scaling configuration.
 
-> ✅ **Conclusion:** Azure App Service is the optimal choice for this CMS due to its simplicity, scalability, and operational efficiency.
+> **Conclusion:** Azure App Service is the optimal choice for this CMS due to its simplicity, scalability, and operational efficiency.
 
 ---
 
-## 🔄 Assessment: App Changes That Could Affect the Decision
+## Assessment: App Changes That Could Affect the Decision
 
 Although App Service is ideal for the current CMS, future application changes could lead to reconsidering the deployment option.
 
@@ -89,7 +89,7 @@ Although App Service is ideal for the current CMS, future application changes co
 
 ---
 
-## ✅ Final Summary
+## Final Summary
 
 | Factor | Best Option | Reason |
 |--------|--------------|--------|
@@ -99,12 +99,12 @@ Although App Service is ideal for the current CMS, future application changes co
 | **Maintenance** | App Service | No manual patching or OS updates |
 | **Control** | VM | Full OS and dependency management |
 
-> 💡 **Final Verdict:** For the Flask CMS project, **Azure App Service** is the best choice due to its ease of deployment, automatic scaling, integrated monitoring, and reduced maintenance overhead.  
+> **Final Verdict:** For the Flask CMS project, **Azure App Service** is the best choice due to its ease of deployment, automatic scaling, integrated monitoring, and reduced maintenance overhead.  
 > If the project evolves to require custom infrastructure control or specialized workloads, a **VM** could be reconsidered.
 
 ---
 
-🧾 **Deployed Application URL:**  
+**Deployed Application URL:**  
 🔗  [udacitycms-hsggc0fbb9cpfyav.centralus-01.azurewebsites.net](url)
 
 ---
