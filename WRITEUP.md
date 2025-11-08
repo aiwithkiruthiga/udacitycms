@@ -1,3 +1,5 @@
+# Flask CMS Deployment Analysis – Azure App Service vs Virtual Machine
+
 ## Project Overview
 
 * This project involves deploying a **Flask-based Content Management System (Article CMS)** to **Microsoft Azure**.
@@ -19,10 +21,9 @@
 
 ## Chosen Option: **Azure App Service**
 
-I chose **Azure App Service** to deploy the Flask CMS because it offers the best balance of **ease of deployment, scalability, cost efficiency, and minimal maintenance**.  
-Using App Service allows automatic builds from GitHub, environment variable management, and integrated authentication — all without the need to manage servers or networking layers manually. This reduces setup complexity while maintaining enterprise-grade availability and performance.
-
-Deploying on a **Virtual Machine** would provide more control but require considerable setup time for server configuration, SSL, firewall rules, and manual scaling. Since this project primarily focuses on demonstrating application deployment, **App Service is a more practical, managed, and cost-effective solution**.
+* I chose **Azure App Service** to deploy the Flask CMS because it offers the best balance of **ease of deployment, scalability, cost efficiency, and minimal maintenance**.
+* Using App Service allows automatic builds from GitHub, environment variable management, and integrated authentication — all without the need to manage servers or networking layers manually. This reduces setup complexity while maintaining enterprise-grade availability and performance.
+* Deploying on a **Virtual Machine** would provide more control but require considerable setup time for server configuration, SSL, firewall rules, and manual scaling. Since this project primarily focuses on demonstrating application deployment, **App Service is a more practical, managed, and cost-effective solution**.
 
 ---
 
@@ -31,13 +32,13 @@ Deploying on a **Virtual Machine** would provide more control but require consid
 If the CMS application grows significantly — for example, requiring:
 - **Advanced server customization**,  
 - **Background task scheduling (Celery, Redis)**, or  
-- **Complex networking or security rules**,  
+- **Complex networking or security rules**
 
-— then moving to a **Virtual Machine** would become more appropriate. A VM would offer greater flexibility in configuring middleware, installing additional services, and managing performance optimizations specific to the workload.
+moving to a **Virtual Machine** would become more appropriate. A VM would offer greater flexibility in configuring middleware, installing additional services, and managing performance optimizations specific to the workload.
 
 However, for the current lightweight Flask application, **Azure App Service provides all essential functionality with minimal operational burden**. It ensures easy scaling, fast deployment, and automatic patching — making it ideal for small to medium-scale web applications that prioritize simplicity and reliability.
 
----
+
 
 ## Summary
 
@@ -49,6 +50,7 @@ This write-up meets all the submission rubric requirements:
 - Professionally formatted and aligned with project expectations.
 
 In conclusion, **Azure App Service** is the optimal deployment choice for this Flask-based CMS due to its simplicity, scalability, and low-cost managed environment, while still providing the flexibility needed for modern web applications.
+
 
 
 **Deployed Application URL:**  
