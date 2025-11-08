@@ -2,6 +2,7 @@
 The Flask application package.
 """
 import logging
+import sys
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -28,11 +29,15 @@ login.session_protection = "strong"  # optional, adds extra session security
 def inject_user():
     return dict(current_user=current_user)
 
-# Optional: configure logging
+# Optional: configure logging (Azure Log Stream compatible)
 if not app.debug:
-    handler = logging.StreamHandler()
+    handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+    handler.setFormatter(formatter)
     app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info("✅ Flask application started and logging to Azure Log Stream.")
 
 # Import views at the end to avoid circular imports
 import FlaskWebProject.views
