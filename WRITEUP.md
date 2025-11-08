@@ -40,19 +40,6 @@ However, for the current lightweight Flask application, **Azure App Service prov
 
 
 
-## Summary
-
-This write-up meets all the submission rubric requirements:
-
-- **Cost, Scalability, Availability, and Workflow** analyzed for both VM and App Service.  
-- Clear **justification** for choosing Azure App Service.  
-- Consideration of **future app changes** that could alter this decision.  
-- Professionally formatted and aligned with project expectations.
-
-In conclusion, **Azure App Service** is the optimal deployment choice for this Flask-based CMS due to its simplicity, scalability, and low-cost managed environment, while still providing the flexibility needed for modern web applications.
-
-
-
 **Deployed Application URL:**  
 🔗  [udacitycms-hsggc0fbb9cpfyav.centralus-01.azurewebsites.net](url)
 
