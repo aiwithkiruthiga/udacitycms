@@ -3,11 +3,11 @@
 
 ## Overview
 
-This document provides a detailed comparison between **Azure Virtual Machine (VM)** and **Azure App Service** for deploying the Flask-based Content Management System (CMS).  
-It analyzes **cost, scalability, availability, and workflow**, and concludes with a justification for the chosen deployment approach — **Azure App Service**.  
-Finally, it discusses how potential application changes could influence the deployment decision in the future.
+* This document provides a detailed comparison between **Azure Virtual Machine (VM)** and **Azure App Service** for deploying the Flask-based Content Management System (CMS).
+* It analyzes **cost, scalability, availability, and workflow**, and concludes with a justification for the chosen deployment approach — **Azure App Service**.
+* Finally, it discusses how potential application changes could influence the deployment decision in the future.
 
----
+
 
 ## Comparison: VM vs App Service
 
@@ -21,7 +21,7 @@ Finally, it discusses how potential application changes could influence the depl
 
 **Summary:** App Service is more cost-efficient for small to medium-scale applications like the Flask CMS, while a VM suits consistently heavy workloads or custom environments.
 
----
+
 
 ### 2. Scalability Analysis
 
@@ -33,7 +33,7 @@ Finally, it discusses how potential application changes could influence the depl
 
 **Summary:** App Service provides superior scalability and elasticity with minimal administrative effort.
 
----
+
 
 ### 3. Availability Analysis
 
@@ -45,7 +45,7 @@ Finally, it discusses how potential application changes could influence the depl
 
 **Summary:** App Service offers reliable built-in availability and fault tolerance, ideal for production-grade web apps.
 
----
+
 
 ### 4. Workflow and Deployment Analysis
 
@@ -57,7 +57,7 @@ Finally, it discusses how potential application changes could influence the depl
 
 **Summary:** App Service simplifies the deployment pipeline, supports CI/CD, and integrates monitoring by default.
 
----
+
 
 ## Decision: Why I Chose Azure App Service
 
@@ -69,7 +69,7 @@ In contrast, a VM would require continuous OS maintenance, security patching, an
 
 > **Conclusion:** Azure App Service is the optimal choice for this CMS due to its simplicity, scalability, and operational efficiency.
 
----
+
 
 ## Assessment: App Changes That Could Affect the Decision
 
